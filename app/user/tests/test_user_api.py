@@ -32,7 +32,11 @@ class PublicUserApiTest(TestCase):
         self.assertNotIn('password', res.data)
 
     def test_user_exists(self):
-        payload = {'email': 'test@test.com', 'password': 'changeme123'}
+        payload = {
+            'email': 'test@test.com',
+            'password': 'changeme123',
+            'name': 'testname'
+        }
         create_user(**payload)
 
         res = self.client.post(CREATE_USER_URL, payload)
@@ -40,7 +44,11 @@ class PublicUserApiTest(TestCase):
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
 
     def test_password_too_short(self):
-        payload = {'email': 'test@test.com', 'password': 'ch'}
+        payload = {
+            'email': 'test@test.com',
+            'password': 'ch',
+            'name': 'testname'
+        }
 
         res = self.client.post(CREATE_USER_URL, payload)
 
